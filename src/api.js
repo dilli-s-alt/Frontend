@@ -1,13 +1,32 @@
 import axios from "axios";
 
+const baseURL = (import.meta.env.VITE_API_URL || "http://localhost:5000/api").replace(/\/$/, "");
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL
+  baseURL,
+  headers: {
+    "Content-Type": "application/json"
+  }
 });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  const token = localStorage.getItem("phishscale_token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
   return config;
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("phishscale_token");
+      localStorage.removeItem("phishscale_user");
+    }
+    return Promise.reject(error);
+  }
+);
+
+export const apiBase = baseURL;
 export default api;
