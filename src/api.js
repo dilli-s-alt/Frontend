@@ -7,7 +7,13 @@ const isLocalhost =
 const fallbackApiUrl = isLocalhost ? "http://localhost:5000/api" : "/api";
 const productionDirectApiUrl = "https://phishingscale-project.onrender.com/api";
 
-const baseURL = (rawApiUrl || fallbackApiUrl).replace(/\/+$/, "");
+const preferredApiUrl = isLocalhost
+  ? rawApiUrl || fallbackApiUrl
+  : rawApiUrl && rawApiUrl.startsWith("/")
+    ? rawApiUrl
+    : fallbackApiUrl;
+
+const baseURL = preferredApiUrl.replace(/\/+$/, "");
 
 const api = axios.create({
   baseURL,
