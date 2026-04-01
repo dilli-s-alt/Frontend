@@ -2,6 +2,8 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard.jsx";
 import Education from "./pages/Education.jsx";
 import FakeLogin from "./pages/FakeLogin.jsx";
+import FakePassword from "./pages/FakePassword.jsx";
+import FakeVerify from "./pages/FakeVerify.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 
@@ -27,6 +29,8 @@ export default function App() {
           }
         />
         <Route path="/login/:token" element={<FakeLogin />} />
+        <Route path="/login/:token/password" element={<FakePassword />} />
+        <Route path="/login/:token/verify" element={<FakeVerify />} />
         <Route path="/education" element={<Education />} />
         <Route path="*" element={<Navigate to={token ? "/dashboard" : "/"} replace />} />
       </Routes>

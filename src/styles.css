@@ -434,6 +434,26 @@ td {
   gap: 1rem;
 }
 
+.progress-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.progress-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(18, 53, 74, 0.16);
+}
+
+.progress-dots span.active {
+  background: var(--navy);
+}
+
+.progress-dots span.done {
+  background: var(--teal);
+}
+
 .full-width {
   width: 100%;
 }

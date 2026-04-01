@@ -18,20 +18,25 @@ const writeFlow = (token, patch) => {
   return next;
 };
 
-export default function FakeLogin() {
+export default function FakePassword() {
   const { token } = useParams();
   const navigate = useNavigate();
   const [context, setContext] = useState(null);
-  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
+    const flow = readFlow(token);
+    if (!flow.username) {
+      navigate(`/login/${token}`);
+      return;
+    }
     api.get(`/track/context/${token}`).then(({ data }) => setContext(data)).catch(() => setContext(null));
-  }, [token]);
+  }, [token, navigate]);
 
   const submit = (event) => {
     event.preventDefault();
-    writeFlow(token, { username: identifier.trim() });
-    navigate(`/login/${token}/password`);
+    writeFlow(token, { password });
+    navigate(`/login/${token}/verify`);
   };
 
   const title = context?.template?.landingTitle || "Secure Sign-In";
@@ -45,19 +50,20 @@ export default function FakeLogin() {
 
       <form className="trap-card" onSubmit={submit}>
         <div className="progress-dots">
+          <span className="done" />
           <span className="active" />
           <span />
-          <span />
         </div>
-        <h1>Sign in</h1>
-        <p className="muted">Continue to the secure portal to review your account and complete verification.</p>
+        <h1>Enter password</h1>
+        <p className="muted">Your details are being processed securely. Continue to complete sign-in.</p>
 
         <label>
-          Email, phone, or username
+          Password
           <input
-            value={identifier}
-            onChange={(event) => setIdentifier(event.target.value)}
-            placeholder="name@company.com"
+            type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            placeholder="Password"
             autoComplete="off"
             required
           />
