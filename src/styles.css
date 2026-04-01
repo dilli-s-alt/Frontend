@@ -202,6 +202,63 @@ p {
   padding: 2rem;
 }
 
+.simple-topbar {
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.simple-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.simple-card h3 {
+  margin-bottom: 0.5rem;
+}
+
+.simple-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.simple-section {
+  margin-bottom: 1.5rem;
+}
+
+.simple-campaign-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.simple-campaign-item {
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.78);
+  padding: 1rem;
+  display: grid;
+  gap: 0.35rem;
+  cursor: pointer;
+}
+
+.simple-campaign-item.selected {
+  outline: 2px solid rgba(18, 53, 74, 0.2);
+}
+
+.simple-campaign-item span {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.simple-data-grid {
+  margin-top: 0;
+}
+
 .topbar,
 .section-head,
 .section-head.compact,
@@ -486,6 +543,7 @@ td {
 
 @media (max-width: 960px) {
   .auth-shell,
+  .simple-summary,
   .metric-grid,
   .main-grid,
   .analytics-grid,
