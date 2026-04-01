@@ -1,7 +1,10 @@
 export const DEPARTMENTS = [
   "All Departments",
   "Administration",
+  "Business Development",
+  "Compliance",
   "Customer Support",
+  "Data & Analytics",
   "Engineering",
   "Executive",
   "Facilities",
@@ -10,10 +13,15 @@ export const DEPARTMENTS = [
   "Information Technology",
   "Legal",
   "Marketing",
+  "Medical Affairs",
   "Operations",
+  "Procurement & Vendor Management",
   "Procurement",
   "Product",
+  "Quality Assurance",
+  "Research",
   "Sales",
   "Security",
+  "Supply Chain",
   "Training"
 ];

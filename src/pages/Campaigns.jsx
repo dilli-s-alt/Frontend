@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminLayout from "../components/AdminLayout.jsx";
 import CampaignForm from "../components/CampaignForm.jsx";
 import useAdminData from "../hooks/useAdminData.js";
@@ -21,6 +21,11 @@ export default function Campaigns() {
   const [message, setMessage] = useState("");
   const [sendResults, setSendResults] = useState([]);
   const [busy, setBusy] = useState(false);
+  const [mailStatus, setMailStatus] = useState(null);
+
+  useEffect(() => {
+    api.get("/health").then(({ data }) => setMailStatus(data.mailStatus || null)).catch(() => setMailStatus(null));
+  }, []);
 
   const runAction = async (work, successMessage) => {
     setBusy(true);
@@ -107,6 +112,24 @@ export default function Campaigns() {
             <p className="muted">Create a campaign first to see details here.</p>
           )}
         </div>
+      </section>
+
+      <section className="card table-card">
+        <div className="section-head compact">
+          <div>
+            <p className="eyebrow">Mail Status</p>
+            <h3>SMTP Delivery Readiness</h3>
+          </div>
+        </div>
+        {mailStatus ? (
+          <div className="detail-stack">
+            <div className="detail-row"><strong>Mode</strong><span>{mailStatus.mode}</span></div>
+            <div className="detail-row"><strong>Ready</strong><span>{mailStatus.ready ? "Yes" : "No"}</span></div>
+            <div className="detail-row"><strong>Status</strong><span>{mailStatus.message}</span></div>
+          </div>
+        ) : (
+          <p className="muted">Mail status could not be loaded from the backend.</p>
+        )}
       </section>
 
       {sendResults.length ? (
