@@ -32,14 +32,14 @@ export default function CampaignForm({ templates, onSubmit, busy }) {
     <form className="card form-card" onSubmit={submit}>
       <div className="section-head compact">
         <div>
-          <p className="eyebrow">Week 2</p>
+          <p className="eyebrow">Campaign Setup</p>
           <h3>Create Campaign</h3>
         </div>
       </div>
 
       <label>
         Campaign name
-        <input name="name" value={form.name} onChange={handleChange} placeholder="Q2 credential awareness drill" required />
+        <input name="name" value={form.name} onChange={handleChange} placeholder="Enter campaign name" required />
       </label>
 
       <div className="grid-2">
@@ -79,11 +79,11 @@ export default function CampaignForm({ templates, onSubmit, busy }) {
       <div className="inline-options">
         <label className="checkbox">
           <input type="checkbox" name="testMode" checked={form.testMode} onChange={handleChange} />
-          Launch in test mode first
+          Send a test run first
         </label>
         <label className="checkbox">
           <input type="checkbox" name="sendToSelf" checked={form.sendToSelf} onChange={handleChange} />
-          Send to me before real targets
+          Send first to my email
         </label>
       </div>
 

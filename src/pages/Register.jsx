@@ -33,17 +33,17 @@ export default function Register() {
   return (
     <div className="auth-shell">
       <section className="auth-hero accent-alt">
-        <p className="eyebrow">Secure Training Starts Here</p>
-        <h1>Create an organization and launch your first awareness drill.</h1>
+        <p className="eyebrow">Create Workspace</p>
+        <h1>Create your organization and start managing campaign data.</h1>
         <p>
-          The free tier is perfect for evaluation mode and student demos, with test-mode sending and target limits built in.
+          Add your organization, create campaigns, and manage target records from simple pages.
         </p>
       </section>
 
       <form className="auth-card" onSubmit={submit}>
         <div>
-          <p className="eyebrow">New Workspace</p>
-          <h2>Register</h2>
+          <p className="eyebrow">Organization Setup</p>
+          <h2>Create Account</h2>
         </div>
 
         <div className="grid-2">

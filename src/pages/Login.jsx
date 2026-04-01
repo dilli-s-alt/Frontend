@@ -4,7 +4,7 @@ import api from "../api";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ email: "admin@phishscale.demo", password: "Admin@123" });
+  const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
 
@@ -28,22 +28,22 @@ export default function Login() {
     <div className="auth-shell">
       <section className="auth-hero">
         <p className="eyebrow">PhishScale</p>
-        <h1>Experiential phishing simulations for modern security teams.</h1>
+        <h1>Login and manage your phishing awareness campaigns.</h1>
         <p>
-          Launch safe awareness campaigns, monitor opens and clicks in real time, and redirect employees to teachable moments instead of storing risky data.
+          This website lets an administrator create campaigns, add target data, send tracked emails, and review reports in one place.
         </p>
         <div className="hero-badges">
-          <span>CSV target import</span>
-          <span>Tracked email opens</span>
-          <span>Demo-safe credential simulation</span>
+          <span>Targets</span>
+          <span>Campaigns</span>
+          <span>Reports</span>
         </div>
       </section>
 
       <form className="auth-card" onSubmit={submit}>
         <div>
-          <p className="eyebrow">Welcome Back</p>
-          <h2>Admin Login</h2>
-          <p className="muted">Use the seeded demo account or create your own workspace.</p>
+          <p className="eyebrow">Admin Access</p>
+          <h2>Login</h2>
+          <p className="muted">Enter your administrator email and password.</p>
         </div>
 
         <label>

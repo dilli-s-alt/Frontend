@@ -132,6 +132,10 @@ export default function Campaigns() {
           <div className="detail-stack">
             <div className="detail-row"><strong>Mode</strong><span>{mailStatus.mode}</span></div>
             <div className="detail-row"><strong>Ready</strong><span>{mailStatus.ready ? "Yes" : "No"}</span></div>
+            <div className="detail-row"><strong>Sender email</strong><span>{mailStatus.senderEmail || "Not set"}</span></div>
+            <div className="detail-row"><strong>Reply-To email</strong><span>{mailStatus.replyToEmail || "Not set"}</span></div>
+            <div className="detail-row"><strong>SMTP host</strong><span>{mailStatus.smtpHost || "Not set"}</span></div>
+            <div className="detail-row"><strong>SMTP port</strong><span>{mailStatus.smtpPort || "Not set"}</span></div>
             <div className="detail-row"><strong>Status</strong><span>{mailStatus.message}</span></div>
           </div>
         ) : (
