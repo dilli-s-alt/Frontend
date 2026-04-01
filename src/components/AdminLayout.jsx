@@ -9,7 +9,12 @@ const navItems = [
 ];
 
 export default function AdminLayout({ title, subtitle, children }) {
-  const user = JSON.parse(localStorage.getItem("phishscale_user") || "null");
+  let user = null;
+  try {
+    user = JSON.parse(localStorage.getItem("phishscale_user") || "null");
+  } catch {
+    user = null;
+  }
 
   const logout = () => {
     localStorage.removeItem("phishscale_token");

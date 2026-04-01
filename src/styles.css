@@ -198,6 +198,19 @@ p {
   min-height: 100vh;
 }
 
+.app-crash-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+
+.crash-card {
+  width: min(520px, 100%);
+  padding: 2rem;
+  border-radius: 28px;
+}
+
 .dashboard-shell {
   padding: 2rem;
 }
