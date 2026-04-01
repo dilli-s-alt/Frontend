@@ -28,11 +28,27 @@ export default function TargetImporter({ campaigns, onUpload, onAddTarget, busy 
 
   return (
     <div className="stack-gap">
+      <div className="card form-card">
+        <div className="section-head compact">
+          <div>
+            <p className="eyebrow">Required Target Data</p>
+            <h3>Use These 4 Fields Only</h3>
+          </div>
+        </div>
+        <div className="detail-stack">
+          <div className="detail-row"><strong>1. First Name</strong><span>Required</span></div>
+          <div className="detail-row"><strong>2. Last Name</strong><span>Required</span></div>
+          <div className="detail-row"><strong>3. Email</strong><span>Real target email</span></div>
+          <div className="detail-row"><strong>4. Department</strong><span>Choose one department</span></div>
+        </div>
+        <p className="muted">Do not use demo emails. Use real email addresses only if you want real delivery.</p>
+      </div>
+
       <form className="card form-card" onSubmit={submitFile}>
         <div className="section-head compact">
           <div>
-            <p className="eyebrow">Week 1</p>
-            <h3>Import Target Group</h3>
+            <p className="eyebrow">Step 1</p>
+            <h3>Import Many Targets</h3>
           </div>
         </div>
 
@@ -51,7 +67,7 @@ export default function TargetImporter({ campaigns, onUpload, onAddTarget, busy 
         <label className="file-input">
           CSV file
           <input type="file" accept=".csv" onChange={(event) => setFile(event.target.files?.[0] || null)} required />
-          <span className="muted">Expected columns: First Name, Last Name, Email, Department</span>
+          <span className="muted">Column order must be exactly: First Name, Last Name, Email, Department</span>
         </label>
 
         <button className="primary-btn" type="submit" disabled={busy}>
@@ -62,8 +78,8 @@ export default function TargetImporter({ campaigns, onUpload, onAddTarget, busy 
       <form className="card form-card" onSubmit={submitManual}>
         <div className="section-head compact">
           <div>
-            <p className="eyebrow">Quick Add</p>
-            <h3>Add Single Target</h3>
+            <p className="eyebrow">Step 2</p>
+            <h3>Add One Target</h3>
           </div>
         </div>
 

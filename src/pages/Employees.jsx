@@ -73,7 +73,7 @@ export default function Employees() {
   return (
     <AdminLayout
       title="Employees"
-      subtitle="Import CSV files or add single employees, then review target status by campaign and department."
+      subtitle="Simple order: choose campaign, add target data, then check the table below."
     >
       {message ? <div className="notice success">{message}</div> : null}
       {error ? <div className="notice error">{error}</div> : null}
@@ -84,8 +84,8 @@ export default function Employees() {
         <div className="card form-card">
           <div className="section-head compact">
             <div>
-              <p className="eyebrow">Target Review</p>
-              <h3>{activeCampaign?.name || "Select a campaign"}</h3>
+              <p className="eyebrow">Step 3</p>
+              <h3>{activeCampaign?.name || "Check Added Targets"}</h3>
             </div>
           </div>
 
@@ -117,6 +117,7 @@ export default function Employees() {
             <div className="detail-row"><strong>Opened</strong><span>{visibleTargets.filter((target) => target.status !== "queued").length}</span></div>
             <div className="detail-row"><strong>Submitted</strong><span>{visibleTargets.filter((target) => target.status === "submitted").length}</span></div>
           </div>
+          <p className="muted">If the email column is wrong here, the mail will not go to the right person.</p>
         </div>
       </section>
 

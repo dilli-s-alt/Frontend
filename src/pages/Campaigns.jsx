@@ -62,7 +62,7 @@ export default function Campaigns() {
   return (
     <AdminLayout
       title="Campaigns"
-      subtitle="Create department-focused training drills, choose a template, and launch a test before broad delivery."
+      subtitle="Simple order: create campaign, add targets, check mail status, then send the live campaign."
     >
       {message ? <div className="notice success">{message}</div> : null}
       {error ? <div className="notice error">{error}</div> : null}
@@ -73,7 +73,7 @@ export default function Campaigns() {
         <div className="card form-card">
           <div className="section-head compact">
             <div>
-              <p className="eyebrow">Active Campaign</p>
+              <p className="eyebrow">Step 1</p>
               <h3>{activeCampaign?.name || "No campaign selected"}</h3>
             </div>
           </div>
@@ -103,10 +103,17 @@ export default function Campaigns() {
                 <button className="secondary-btn" onClick={() => sendCampaign(activeCampaign.id, { testMode: true, sendToSelf: true })}>
                   Send test
                 </button>
-                <button className="primary-btn" onClick={() => sendCampaign(activeCampaign.id, { testMode: false, sendToSelf: false })}>
+                <button
+                  className="primary-btn"
+                  onClick={() => sendCampaign(activeCampaign.id, { testMode: false, sendToSelf: false })}
+                  disabled={!mailStatus?.ready || busy}
+                >
                   Send live campaign
                 </button>
               </div>
+              {!mailStatus?.ready ? (
+                <p className="error-text">Live send is blocked until SMTP Delivery Readiness says Yes.</p>
+              ) : null}
             </>
           ) : (
             <p className="muted">Create a campaign first to see details here.</p>
@@ -117,7 +124,7 @@ export default function Campaigns() {
       <section className="card table-card">
         <div className="section-head compact">
           <div>
-            <p className="eyebrow">Mail Status</p>
+            <p className="eyebrow">Step 2</p>
             <h3>SMTP Delivery Readiness</h3>
           </div>
         </div>
@@ -136,7 +143,7 @@ export default function Campaigns() {
         <section className="card table-card">
           <div className="section-head compact">
             <div>
-              <p className="eyebrow">Delivery Results</p>
+              <p className="eyebrow">Step 3</p>
               <h3>Latest Send Attempt</h3>
             </div>
           </div>
