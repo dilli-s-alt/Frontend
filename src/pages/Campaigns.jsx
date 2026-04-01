@@ -19,12 +19,14 @@ export default function Campaigns() {
     setError
   } = useAdminData();
   const [message, setMessage] = useState("");
+  const [sendResults, setSendResults] = useState([]);
   const [busy, setBusy] = useState(false);
 
   const runAction = async (work, successMessage) => {
     setBusy(true);
     setError("");
     setMessage("");
+    setSendResults([]);
     try {
       await work();
       await refresh();
@@ -45,6 +47,7 @@ export default function Campaigns() {
     runAction(async () => {
       const { data } = await api.post(`/campaigns/${campaignId}/send`, options);
       setMessage(data.message || "Campaign processed.");
+      setSendResults(data.results || []);
     }, "Campaign sent.");
 
   if (loading && !dashboard) {
@@ -105,6 +108,39 @@ export default function Campaigns() {
           )}
         </div>
       </section>
+
+      {sendResults.length ? (
+        <section className="card table-card">
+          <div className="section-head compact">
+            <div>
+              <p className="eyebrow">Delivery Results</p>
+              <h3>Latest Send Attempt</h3>
+            </div>
+          </div>
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Mode</th>
+                  <th>Delivered</th>
+                  <th>SMTP response</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sendResults.map((result) => (
+                  <tr key={`${result.to}-${result.mode}`}>
+                    <td>{result.to}</td>
+                    <td>{result.mode}</td>
+                    <td>{result.delivered ? "Yes" : "No"}</td>
+                    <td>{result.response || result.rejected?.join(", ") || "Preview only"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      ) : null}
 
       <section className="card simple-section">
         <div className="section-head compact">
