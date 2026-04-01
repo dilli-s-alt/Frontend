@@ -4,9 +4,7 @@ const rawApiUrl = import.meta.env.VITE_API_URL?.trim();
 const isLocalhost =
   window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
 
-const fallbackApiUrl = isLocalhost
-  ? "http://localhost:5000/api"
-  : "https://phishingscale-project.onrender.com/api";
+const fallbackApiUrl = isLocalhost ? "http://localhost:5000/api" : "/api";
 
 const baseURL = (rawApiUrl || fallbackApiUrl).replace(/\/+$/, "");
 
