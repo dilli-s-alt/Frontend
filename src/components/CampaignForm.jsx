@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { DEPARTMENTS } from "../constants.js";
 
 const initialForm = {
   name: "",
@@ -56,12 +57,13 @@ export default function CampaignForm({ templates, onSubmit, busy }) {
 
         <label>
           Department focus
-          <input
-            name="departmentFocus"
-            value={form.departmentFocus}
-            onChange={handleChange}
-            placeholder="Engineering"
-          />
+          <select name="departmentFocus" value={form.departmentFocus} onChange={handleChange}>
+            {DEPARTMENTS.map((department) => (
+              <option key={department} value={department}>
+                {department}
+              </option>
+            ))}
+          </select>
         </label>
       </div>
 

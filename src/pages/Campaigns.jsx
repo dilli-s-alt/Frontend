@@ -1,0 +1,155 @@
+import { useState } from "react";
+import AdminLayout from "../components/AdminLayout.jsx";
+import CampaignForm from "../components/CampaignForm.jsx";
+import useAdminData from "../hooks/useAdminData.js";
+import api from "../api";
+
+export default function Campaigns() {
+  const {
+    dashboard,
+    templates,
+    campaigns,
+    activeCampaign,
+    activeCampaignId,
+    setActiveCampaignId,
+    campaignDetail,
+    refresh,
+    loading,
+    error,
+    setError
+  } = useAdminData();
+  const [message, setMessage] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  const runAction = async (work, successMessage) => {
+    setBusy(true);
+    setError("");
+    setMessage("");
+    try {
+      await work();
+      await refresh();
+      setMessage(successMessage);
+    } catch (err) {
+      setError(err.response?.data?.message || "Something went wrong.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const createCampaign = (form) =>
+    runAction(async () => {
+      await api.post("/campaigns", form);
+    }, "Campaign created successfully.");
+
+  const sendCampaign = (campaignId, options) =>
+    runAction(async () => {
+      const { data } = await api.post(`/campaigns/${campaignId}/send`, options);
+      setMessage(data.message || "Campaign processed.");
+    }, "Campaign sent.");
+
+  if (loading && !dashboard) {
+    return <div className="loading-screen">Loading campaigns...</div>;
+  }
+
+  return (
+    <AdminLayout
+      title="Campaigns"
+      subtitle="Create department-focused training drills, choose a template, and launch a test before broad delivery."
+    >
+      {message ? <div className="notice success">{message}</div> : null}
+      {error ? <div className="notice error">{error}</div> : null}
+
+      <section className="main-grid">
+        <CampaignForm templates={templates} onSubmit={createCampaign} busy={busy} />
+
+        <div className="card form-card">
+          <div className="section-head compact">
+            <div>
+              <p className="eyebrow">Active Campaign</p>
+              <h3>{activeCampaign?.name || "No campaign selected"}</h3>
+            </div>
+          </div>
+
+          <label>
+            Campaign
+            <select value={activeCampaignId} onChange={(event) => setActiveCampaignId(event.target.value)}>
+              <option value="">Select a campaign</option>
+              {campaigns.map((campaign) => (
+                <option key={campaign.id} value={campaign.id}>
+                  {campaign.name}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          {activeCampaign ? (
+            <>
+              <div className="detail-stack">
+                <div className="detail-row"><strong>Template</strong><span>{activeCampaign.templateName}</span></div>
+                <div className="detail-row"><strong>Targets</strong><span>{activeCampaign.targetCount}</span></div>
+                <div className="detail-row"><strong>Open rate</strong><span>{activeCampaign.metrics.openRate}%</span></div>
+                <div className="detail-row"><strong>Click rate</strong><span>{activeCampaign.metrics.clickRate}%</span></div>
+                <div className="detail-row"><strong>Department focus</strong><span>{activeCampaign.departmentFocus}</span></div>
+              </div>
+              <div className="action-row">
+                <button className="secondary-btn" onClick={() => sendCampaign(activeCampaign.id, { testMode: true, sendToSelf: true })}>
+                  Send test
+                </button>
+                <button className="primary-btn" onClick={() => sendCampaign(activeCampaign.id, { testMode: false, sendToSelf: false })}>
+                  Send live campaign
+                </button>
+              </div>
+            </>
+          ) : (
+            <p className="muted">Create a campaign first to see details here.</p>
+          )}
+        </div>
+      </section>
+
+      <section className="card simple-section">
+        <div className="section-head compact">
+          <div>
+            <p className="eyebrow">Campaign List</p>
+            <h3>All Campaigns</h3>
+          </div>
+        </div>
+
+        <div className="simple-campaign-list">
+          {campaigns.map((campaign) => (
+            <button
+              key={campaign.id}
+              className={`simple-campaign-item ${campaign.id === activeCampaign?.id ? "selected" : ""}`}
+              onClick={() => setActiveCampaignId(campaign.id)}
+            >
+              <strong>{campaign.name}</strong>
+              <span>{campaign.templateName}</span>
+              <span>{campaign.targetCount} targets</span>
+            </button>
+          ))}
+          {!campaigns.length ? <p className="muted">No campaigns created yet.</p> : null}
+        </div>
+      </section>
+
+      {campaignDetail ? (
+        <section className="card table-card">
+          <div className="section-head compact">
+            <div>
+              <p className="eyebrow">Timeline</p>
+              <h3>{campaignDetail.campaign.name}</h3>
+            </div>
+          </div>
+          <div className="timeline">
+            {campaignDetail.timeline.map((event) => (
+              <div key={event.id} className="timeline-item">
+                <strong>{event.kind}</strong>
+                <p>{event.campaignName}</p>
+                <span>{new Date(event.createdAt).toLocaleString()}</span>
+              </div>
+            ))}
+            {!campaignDetail.timeline.length ? <p className="muted">No activity for this campaign yet.</p> : null}
+          </div>
+        </section>
+      ) : null}
+    </AdminLayout>
+  );
+}

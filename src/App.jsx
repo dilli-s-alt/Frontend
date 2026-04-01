@@ -1,11 +1,15 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import Campaigns from "./pages/Campaigns.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Education from "./pages/Education.jsx";
+import Employees from "./pages/Employees.jsx";
 import FakeLogin from "./pages/FakeLogin.jsx";
 import FakePassword from "./pages/FakePassword.jsx";
 import FakeVerify from "./pages/FakeVerify.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import Reports from "./pages/Reports.jsx";
+import Templates from "./pages/Templates.jsx";
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("phishscale_token");
@@ -25,6 +29,38 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/campaigns"
+          element={
+            <ProtectedRoute>
+              <Campaigns />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/employees"
+          element={
+            <ProtectedRoute>
+              <Employees />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/templates"
+          element={
+            <ProtectedRoute>
+              <Templates />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reports"
+          element={
+            <ProtectedRoute>
+              <Reports />
             </ProtectedRoute>
           }
         />

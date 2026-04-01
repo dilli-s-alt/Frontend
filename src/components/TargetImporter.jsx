@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { DEPARTMENTS } from "../constants.js";
 
 export default function TargetImporter({ campaigns, onUpload, onAddTarget, busy }) {
   const [campaignId, setCampaignId] = useState("");
@@ -97,11 +98,18 @@ export default function TargetImporter({ campaigns, onUpload, onAddTarget, busy 
           </label>
           <label>
             Department
-            <input
+            <select
               value={manualTarget.department}
               onChange={(event) => setManualTarget((current) => ({ ...current, department: event.target.value }))}
               required
-            />
+            >
+              <option value="">Select a department</option>
+              {DEPARTMENTS.filter((department) => department !== "All Departments").map((department) => (
+                <option key={department} value={department}>
+                  {department}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
 
