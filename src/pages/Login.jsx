@@ -8,7 +8,7 @@ export default function Login() {
   const nav = useNavigate();
 
   const submit = async () => {
-    const res = await api.post("/auth/login", { email, password });
+    const res = await api.post("https://phishingscale-project.onrender.com/auth/login", { email, password });
     localStorage.setItem("token", res.data.token);
     nav("/dashboard");
   };
