@@ -62,7 +62,7 @@ export default function Campaigns() {
   return (
     <AdminLayout
       title="Campaigns"
-      subtitle="Simple order: create campaign, add targets, check mail status, then send the live campaign."
+      subtitle="Create and manage campaigns with a simpler glow-style control panel."
     >
       {message ? <div className="notice success">{message}</div> : null}
       {error ? <div className="notice error">{error}</div> : null}
@@ -73,7 +73,7 @@ export default function Campaigns() {
         <div className="card form-card">
           <div className="section-head compact">
             <div>
-              <p className="eyebrow">Step 1</p>
+              <p className="eyebrow">Campaign Control</p>
               <h3>{activeCampaign?.name || "No campaign selected"}</h3>
             </div>
           </div>
@@ -122,12 +122,12 @@ export default function Campaigns() {
       </section>
 
       <section className="card table-card">
-        <div className="section-head compact">
-          <div>
-            <p className="eyebrow">Step 2</p>
-            <h3>SMTP Delivery Readiness</h3>
+          <div className="section-head compact">
+            <div>
+              <p className="eyebrow">Delivery Check</p>
+              <h3>SMTP readiness</h3>
+            </div>
           </div>
-        </div>
         {mailStatus ? (
           <div className="detail-stack">
             <div className="detail-row"><strong>Mode</strong><span>{mailStatus.mode}</span></div>
@@ -147,8 +147,8 @@ export default function Campaigns() {
         <section className="card table-card">
           <div className="section-head compact">
             <div>
-              <p className="eyebrow">Step 3</p>
-              <h3>Latest Send Attempt</h3>
+              <p className="eyebrow">Send Results</p>
+              <h3>Latest send attempt</h3>
             </div>
           </div>
           <div className="table-wrap">
@@ -180,7 +180,7 @@ export default function Campaigns() {
         <div className="section-head compact">
           <div>
             <p className="eyebrow">Campaign List</p>
-            <h3>All Campaigns</h3>
+            <h3>All campaigns</h3>
           </div>
         </div>
 

@@ -29,13 +29,13 @@ export default function Login() {
     <div className="auth-shell">
       <section className="auth-hero">
         <p className="eyebrow">PhishScale</p>
-        <h1>Login and manage your phishing awareness campaigns.</h1>
+        <h1>Simple glowing admin login for your phishing awareness project.</h1>
         <p>
-          This website lets an administrator create campaigns, add target data, send tracked emails, and review reports in one place.
+          Sign in to manage campaigns, upload target lists, review results, and keep the whole project in one neat dashboard.
         </p>
         <div className="hero-badges">
-          <span>Targets</span>
-          <span>Campaigns</span>
+          <span>Login</span>
+          <span>Dashboard</span>
           <span>Reports</span>
         </div>
       </section>
@@ -44,7 +44,7 @@ export default function Login() {
         <div>
           <p className="eyebrow">Admin Access</p>
           <h2>Login</h2>
-          <p className="muted">Enter your administrator email and password.</p>
+          <p className="muted">Enter your admin email and password to open the workspace.</p>
         </div>
 
         <label>
@@ -76,6 +76,7 @@ export default function Login() {
         <p className="muted small-text">
           Need a tenant? <Link to="/register">Create an organization</Link>
         </p>
+        <p className="auth-footer-note">This frontend is intentionally simple and project-ready.</p>
       </form>
     </div>
   );

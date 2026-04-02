@@ -50,7 +50,7 @@ export default function FakePassword() {
           <span />
         </div>
         <h1>Enter password</h1>
-        <p className="muted">Your details are being processed securely. Continue to complete sign-in.</p>
+        <p className="muted">Continue through the second step of the simulated login flow.</p>
 
         <label>
           Password

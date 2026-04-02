@@ -31,8 +31,8 @@ export default function TargetImporter({ campaigns, onUpload, onAddTarget, busy 
       <div className="card form-card">
         <div className="section-head compact">
           <div>
-            <p className="eyebrow">Required Target Data</p>
-            <h3>Use These 4 Fields Only</h3>
+            <p className="eyebrow">Target Format</p>
+            <h3>Keep the import simple</h3>
           </div>
         </div>
         <div className="detail-stack">
@@ -41,14 +41,14 @@ export default function TargetImporter({ campaigns, onUpload, onAddTarget, busy 
           <div className="detail-row"><strong>3. Email</strong><span>Real target email</span></div>
           <div className="detail-row"><strong>4. Department</strong><span>Choose one department</span></div>
         </div>
-        <p className="muted">Do not use demo emails. Use real email addresses only if you want real delivery.</p>
+        <p className="muted">Use the CSV importer for bulk uploads or add a single person manually below.</p>
       </div>
 
       <form className="card form-card" onSubmit={submitFile}>
         <div className="section-head compact">
           <div>
-            <p className="eyebrow">Step 1</p>
-            <h3>Import Many Targets</h3>
+            <p className="eyebrow">Bulk Import</p>
+            <h3>Upload a CSV</h3>
           </div>
         </div>
 
@@ -78,8 +78,8 @@ export default function TargetImporter({ campaigns, onUpload, onAddTarget, busy 
       <form className="card form-card" onSubmit={submitManual}>
         <div className="section-head compact">
           <div>
-            <p className="eyebrow">Step 2</p>
-            <h3>Add One Target</h3>
+            <p className="eyebrow">Manual Entry</p>
+            <h3>Add one target</h3>
           </div>
         </div>
 

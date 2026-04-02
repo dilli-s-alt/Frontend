@@ -11,7 +11,7 @@ export default function Templates() {
   return (
     <AdminLayout
       title="Templates"
-      subtitle="Review the built-in awareness templates, sender names, landing page styles, and training clues."
+      subtitle="A simple browser for your email templates and landing page clues."
     >
       {error ? <div className="notice error">{error}</div> : null}
 

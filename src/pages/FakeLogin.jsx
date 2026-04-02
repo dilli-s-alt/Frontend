@@ -45,7 +45,7 @@ export default function FakeLogin() {
           <span />
         </div>
         <h1>Sign in</h1>
-        <p className="muted">Continue to the secure portal to review your account and complete verification.</p>
+        <p className="muted">A simple glowing sign-in page for the simulated flow.</p>
 
         <label>
           Email, phone, or username

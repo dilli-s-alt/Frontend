@@ -20,7 +20,7 @@ export default function Reports() {
   return (
     <AdminLayout
       title="Reports"
-      subtitle="View simple performance summaries, department breakdowns, and campaign-level results."
+      subtitle="Simple reporting cards and glow charts for campaign performance."
     >
       {error ? <div className="notice error">{error}</div> : null}
 
@@ -28,14 +28,17 @@ export default function Reports() {
         <>
           <section className="simple-summary">
             <div className="card simple-card">
+              <p className="eyebrow">Open</p>
               <h3>Open Rate</h3>
               <p className="simple-number">{dashboard.summary.openRate}%</p>
             </div>
             <div className="card simple-card">
+              <p className="eyebrow">Click</p>
               <h3>Click Rate</h3>
               <p className="simple-number">{dashboard.summary.clickRate}%</p>
             </div>
             <div className="card simple-card">
+              <p className="eyebrow">Submit</p>
               <h3>Submit Rate</h3>
               <p className="simple-number">{dashboard.summary.compromiseRate}%</p>
             </div>

@@ -33,18 +33,24 @@ export default function Register() {
 
   return (
     <div className="auth-shell">
-      <section className="auth-hero accent-alt">
+      <section className="auth-hero">
         <p className="eyebrow">Create Workspace</p>
-        <h1>Create your organization and start managing campaign data.</h1>
+        <h1>Start a new workspace with the same simple glow design.</h1>
         <p>
-          Add your organization, create campaigns, and manage target records from simple pages.
+          Set up your organization, sign in, and move directly into the dashboard flow.
         </p>
+        <div className="hero-badges">
+          <span>Register</span>
+          <span>Workspace</span>
+          <span>Secure</span>
+        </div>
       </section>
 
       <form className="auth-card" onSubmit={submit}>
         <div>
           <p className="eyebrow">Organization Setup</p>
           <h2>Create Account</h2>
+          <p className="muted">Use this form to make the first admin account for your project.</p>
         </div>
 
         <div className="grid-2">

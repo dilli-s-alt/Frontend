@@ -7,6 +7,7 @@ export default function BarChart({ title, rows, valueKey, colorClass, suffix = "
         <div>
           <p className="eyebrow">Analytics</p>
           <h3>{title}</h3>
+          <p className="muted">Simple visual breakdown for the current dataset.</p>
         </div>
       </div>
       <div className="bars">

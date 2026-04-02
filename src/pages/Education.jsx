@@ -19,7 +19,7 @@ export default function Education() {
         <p className="eyebrow">Teachable Moment</p>
         <h1>{missing ? "This simulation link is no longer active." : "Oops. This was a phishing simulation."}</h1>
         <p>
-          The goal of this exercise is to build pattern recognition. Safe reporting beats fast clicking every time.
+          The goal is still the same: keep the lesson clear, calm, and easy to understand after the simulated flow.
         </p>
 
         <div className="clue-list">

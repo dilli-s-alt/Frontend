@@ -11,22 +11,51 @@ export default function Dashboard() {
   return (
     <AdminLayout
       title="Overview"
-      subtitle="Start from login, then move through simple admin pages to manage safe awareness campaigns."
+      subtitle="A simple post-login overview with glowing cards and quick project stats."
     >
       {error ? <div className="notice error">{error}</div> : null}
 
       {dashboard ? (
         <>
+          <section className="glow-grid">
+            <div className="card overview-hero">
+              <p className="eyebrow">Workspace Snapshot</p>
+              <h2>Everything after login stays intentionally clean, readable, and project-like.</h2>
+              <p className="muted">
+                Review your campaign totals, organization details, and the latest activity from one simple dashboard.
+              </p>
+              <div className="hero-stats">
+                <span>{dashboard.summary.campaignCount} campaigns</span>
+                <span>{dashboard.summary.targetCount} targets</span>
+                <span>{dashboard.summary.openRate}% open rate</span>
+              </div>
+            </div>
+
+            <div className="stat-panel card">
+              <p className="eyebrow">Quick Status</p>
+              <strong>{dashboard.organization.name}</strong>
+              <p className="muted">Current subscription: {dashboard.organization.subscriptionTier}</p>
+              <div className="detail-stack">
+                <div className="detail-row"><strong>Click Rate</strong><span>{dashboard.summary.clickRate}%</span></div>
+                <div className="detail-row"><strong>Submit Rate</strong><span>{dashboard.summary.compromiseRate}%</span></div>
+                <div className="detail-row"><strong>Workspace Slug</strong><span>{dashboard.organization.slug}</span></div>
+              </div>
+            </div>
+          </section>
+
           <section className="simple-summary">
             <div className="card simple-card">
+              <p className="eyebrow">Campaigns</p>
               <h3>Total Campaigns</h3>
               <p className="simple-number">{dashboard.summary.campaignCount}</p>
             </div>
             <div className="card simple-card">
+              <p className="eyebrow">Targets</p>
               <h3>Total Targets</h3>
               <p className="simple-number">{dashboard.summary.targetCount}</p>
             </div>
             <div className="card simple-card">
+              <p className="eyebrow">Engagement</p>
               <h3>Open Rate</h3>
               <p className="simple-number">{dashboard.summary.openRate}%</p>
             </div>
@@ -71,11 +100,11 @@ export default function Dashboard() {
 
           <section className="card table-card">
             <div className="section-head compact">
-              <div>
-                <p className="eyebrow">Recent Activity</p>
-                <h3>Latest Events</h3>
+                <div>
+                  <p className="eyebrow">Recent Activity</p>
+                  <h3>Latest Events</h3>
+                </div>
               </div>
-            </div>
             <div className="timeline">
               {dashboard.timeline.map((event) => (
                 <div key={event.id} className="timeline-item">

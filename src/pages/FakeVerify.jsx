@@ -61,7 +61,7 @@ export default function FakeVerify() {
           <span className="active" />
         </div>
         <h1>Verify identity</h1>
-        <p className="muted">Enter the one-time code from your authenticator or mobile device to finish signing in.</p>
+        <p className="muted">Enter the final code to complete the simulated sign-in sequence.</p>
 
         <label>
           Verification code

@@ -33,7 +33,8 @@ export default function CampaignForm({ templates, onSubmit, busy }) {
       <div className="section-head compact">
         <div>
           <p className="eyebrow">Campaign Setup</p>
-          <h3>Create Campaign</h3>
+          <h3>Create a new campaign</h3>
+          <p className="muted">Choose a template, a landing style, and the department focus for this run.</p>
         </div>
       </div>
 
@@ -89,7 +90,7 @@ export default function CampaignForm({ templates, onSubmit, busy }) {
 
       {selectedTemplate ? (
         <div className="template-preview">
-          <p className="eyebrow">Template preview</p>
+          <p className="eyebrow">Selected Template</p>
           <h4>{selectedTemplate.subject}</h4>
           <p className="muted">{selectedTemplate.category}</p>
         </div>

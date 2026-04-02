@@ -73,7 +73,7 @@ export default function Employees() {
   return (
     <AdminLayout
       title="Employees"
-      subtitle="Simple order: choose campaign, add target data, then check the table below."
+      subtitle="Upload targets, add individuals, and review the list in a clean post-login page."
     >
       {message ? <div className="notice success">{message}</div> : null}
       {error ? <div className="notice error">{error}</div> : null}
@@ -84,8 +84,8 @@ export default function Employees() {
         <div className="card form-card">
           <div className="section-head compact">
             <div>
-              <p className="eyebrow">Step 3</p>
-              <h3>{activeCampaign?.name || "Check Added Targets"}</h3>
+              <p className="eyebrow">Target Review</p>
+              <h3>{activeCampaign?.name || "Check added targets"}</h3>
             </div>
           </div>
 
@@ -125,7 +125,7 @@ export default function Employees() {
         <div className="section-head compact">
           <div>
             <p className="eyebrow">Employee Table</p>
-            <h3>Campaign Targets</h3>
+            <h3>Campaign targets</h3>
           </div>
         </div>
         <div className="table-wrap">
