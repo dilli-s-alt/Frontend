@@ -1,8 +1,25 @@
 import AdminLayout from "../components/AdminLayout.jsx";
 import useAdminData from "../hooks/useAdminData.js";
 
+function formatTrackingLabel(status) {
+  if (!status) {
+    return "Queued";
+  }
+
+  return status.charAt(0).toUpperCase() + status.slice(1);
+}
+
 export default function Dashboard() {
-  const { dashboard, loading, error } = useAdminData();
+  const {
+    dashboard,
+    campaigns,
+    activeCampaign,
+    activeCampaignId,
+    setActiveCampaignId,
+    campaignDetail,
+    loading,
+    error
+  } = useAdminData();
 
   if (loading && !dashboard) {
     return <div className="loading-screen">Loading workspace...</div>;
@@ -10,8 +27,8 @@ export default function Dashboard() {
 
   return (
     <AdminLayout
-      title="Overview"
-      subtitle="A simple post-login overview with glowing cards and quick project stats."
+      title="Dashboard"
+      subtitle="Login first, then review campaign targets and tracking activity from one main dashboard."
     >
       {error ? <div className="notice error">{error}</div> : null}
 
@@ -19,23 +36,24 @@ export default function Dashboard() {
         <>
           <section className="glow-grid">
             <div className="card overview-hero">
-              <p className="eyebrow">Workspace Snapshot</p>
-              <h2>Everything after login stays intentionally clean, readable, and project-like.</h2>
+              <p className="eyebrow">Project Workflow</p>
+              <h2>Login, choose a campaign, review targets, then monitor opens, clicks, and submissions.</h2>
               <p className="muted">
-                Review your campaign totals, organization details, and the latest activity from one simple dashboard.
+                This first screen after login is now focused on the real project flow from the README: targets and tracking first.
               </p>
               <div className="hero-stats">
                 <span>{dashboard.summary.campaignCount} campaigns</span>
                 <span>{dashboard.summary.targetCount} targets</span>
-                <span>{dashboard.summary.openRate}% open rate</span>
+                <span>{dashboard.summary.deliveryCount} deliveries</span>
               </div>
             </div>
 
             <div className="stat-panel card">
-              <p className="eyebrow">Quick Status</p>
+              <p className="eyebrow">Workspace</p>
               <strong>{dashboard.organization.name}</strong>
               <p className="muted">Current subscription: {dashboard.organization.subscriptionTier}</p>
               <div className="detail-stack">
+                <div className="detail-row"><strong>Open Rate</strong><span>{dashboard.summary.openRate}%</span></div>
                 <div className="detail-row"><strong>Click Rate</strong><span>{dashboard.summary.clickRate}%</span></div>
                 <div className="detail-row"><strong>Submit Rate</strong><span>{dashboard.summary.compromiseRate}%</span></div>
                 <div className="detail-row"><strong>Workspace Slug</strong><span>{dashboard.organization.slug}</span></div>
@@ -61,59 +79,124 @@ export default function Dashboard() {
             </div>
           </section>
 
+          <section className="card table-card">
+            <div className="section-head compact">
+              <div>
+                <p className="eyebrow">Step 1</p>
+                <h3>Select campaign</h3>
+                <p className="muted">Choose the campaign whose target list and tracking details you want to inspect.</p>
+              </div>
+            </div>
+            <label>
+              Campaign
+              <select value={activeCampaignId} onChange={(event) => setActiveCampaignId(event.target.value)}>
+                <option value="">Select a campaign</option>
+                {campaigns.map((campaign) => (
+                  <option key={campaign.id} value={campaign.id}>
+                    {campaign.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </section>
+
           <section className="data-grid">
             <div className="card table-card">
               <div className="section-head compact">
                 <div>
-                  <p className="eyebrow">Organization</p>
-                  <h3>{dashboard.organization.name}</h3>
+                  <p className="eyebrow">Active Campaign</p>
+                  <h3>{activeCampaign?.name || "No campaign selected"}</h3>
                 </div>
               </div>
               <div className="detail-stack">
-                <div className="detail-row"><strong>Workspace slug</strong><span>{dashboard.organization.slug}</span></div>
-                <div className="detail-row"><strong>Subscription</strong><span>{dashboard.organization.subscriptionTier}</span></div>
-                <div className="detail-row"><strong>Campaigns</strong><span>{dashboard.summary.campaignCount}</span></div>
-                <div className="detail-row"><strong>Targets</strong><span>{dashboard.summary.targetCount}</span></div>
-                <div className="detail-row"><strong>Click rate</strong><span>{dashboard.summary.clickRate}%</span></div>
-                <div className="detail-row"><strong>Submit rate</strong><span>{dashboard.summary.compromiseRate}%</span></div>
+                <div className="detail-row"><strong>Template</strong><span>{activeCampaign?.templateName || "Not selected"}</span></div>
+                <div className="detail-row"><strong>Department Focus</strong><span>{activeCampaign?.departmentFocus || "All Departments"}</span></div>
+                <div className="detail-row"><strong>Targets</strong><span>{activeCampaign?.targetCount ?? 0}</span></div>
+                <div className="detail-row"><strong>Open Rate</strong><span>{activeCampaign?.metrics?.openRate ?? 0}%</span></div>
+                <div className="detail-row"><strong>Click Rate</strong><span>{activeCampaign?.metrics?.clickRate ?? 0}%</span></div>
+                <div className="detail-row"><strong>Submit Rate</strong><span>{activeCampaign?.metrics?.compromiseRate ?? 0}%</span></div>
               </div>
             </div>
 
             <div className="card table-card">
               <div className="section-head compact">
                 <div>
-                  <p className="eyebrow">Departments</p>
-                  <h3>Coverage Snapshot</h3>
+                  <p className="eyebrow">Tracking Summary</p>
+                  <h3>What happened to this campaign</h3>
                 </div>
               </div>
               <div className="detail-stack">
-                {dashboard.departments.map((dept) => (
+                {(campaignDetail?.departmentStats || dashboard.departments).map((dept) => (
                   <div className="detail-row" key={dept.department}>
                     <strong>{dept.department}</strong>
-                    <span>{dept.total} targets</span>
+                    <span>
+                      {dept.total} targets • {dept.openRate}% open • {dept.clickRate}% click
+                    </span>
                   </div>
                 ))}
-                {!dashboard.departments.length ? <p className="muted">No department data yet.</p> : null}
+                {!(campaignDetail?.departmentStats || dashboard.departments).length ? <p className="muted">No department data yet.</p> : null}
               </div>
             </div>
           </section>
 
           <section className="card table-card">
             <div className="section-head compact">
-                <div>
-                  <p className="eyebrow">Recent Activity</p>
-                  <h3>Latest Events</h3>
-                </div>
+              <div>
+                <p className="eyebrow">Step 2</p>
+                <h3>Target details</h3>
+                <p className="muted">These are the uploaded targets for the selected campaign and their latest tracking status.</p>
               </div>
+            </div>
+            <div className="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(campaignDetail?.targets || []).map((target) => (
+                    <tr key={target.id}>
+                      <td>{target.firstName} {target.lastName}</td>
+                      <td>{target.email}</td>
+                      <td>{target.department || "General"}</td>
+                      <td>
+                        <span className={`status-chip ${target.status || "queued"}`}>
+                          {formatTrackingLabel(target.status)}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                  {!campaignDetail?.targets?.length ? (
+                    <tr>
+                      <td colSpan="4" className="muted">No target details available yet for this campaign.</td>
+                    </tr>
+                  ) : null}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="card table-card">
+            <div className="section-head compact">
+              <div>
+                <p className="eyebrow">Step 3</p>
+                <h3>Tracking details</h3>
+                <p className="muted">Track opens, clicks, and submissions from the campaign timeline below.</p>
+              </div>
+            </div>
             <div className="timeline">
-              {dashboard.timeline.map((event) => (
+              {(campaignDetail?.timeline || dashboard.timeline).map((event) => (
                 <div key={event.id} className="timeline-item">
                   <strong>{event.kind}</strong>
                   <p>{event.campaignName}</p>
                   <span>{new Date(event.createdAt).toLocaleString()}</span>
                 </div>
               ))}
-              {!dashboard.timeline.length ? <p className="muted">No activity yet.</p> : null}
+              {!(campaignDetail?.timeline || dashboard.timeline).length ? <p className="muted">No activity yet.</p> : null}
             </div>
           </section>
         </>
