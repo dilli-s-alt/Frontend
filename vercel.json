@@ -5,7 +5,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://phishingscale-project.onrender.com/api/$1"
+      "destination": "https://phishingscale-5eow.onrender.com/api/$1"
     },
     {
       "source": "/(.*)",

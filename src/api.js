@@ -4,7 +4,7 @@ import { isLocalhostHost, safeLocalStorage } from "./utils/storage.js";
 const rawApiUrl = import.meta.env.VITE_API_URL?.trim();
 const isLocalhost = isLocalhostHost();
 
-const productionDirectApiUrl = "https://phishingscale-project.onrender.com/api";
+const productionDirectApiUrl = "https://phishingscale-5eow.onrender.com/api";
 const fallbackApiUrl = isLocalhost ? productionDirectApiUrl : "/api";
 
 const preferredApiUrl = isLocalhost
