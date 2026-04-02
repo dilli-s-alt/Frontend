@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
+import { getAuthErrorMessage } from "../utils/authErrors.js";
 import { safeLocalStorage } from "../utils/storage.js";
 
 export default function Register() {
@@ -25,7 +26,7 @@ export default function Register() {
       safeLocalStorage.setItem("phishscale_user", JSON.stringify(data.user));
       navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.message || "Unable to create the workspace.");
+      setError(getAuthErrorMessage(err, "Unable to create the workspace."));
     } finally {
       setBusy(false);
     }

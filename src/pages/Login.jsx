@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../api";
+import api, { apiBase } from "../api";
+import { getAuthErrorMessage } from "../utils/authErrors.js";
 import { safeLocalStorage } from "../utils/storage.js";
 
 export default function Login() {
@@ -19,7 +20,7 @@ export default function Login() {
       safeLocalStorage.setItem("phishscale_user", JSON.stringify(data.user));
       navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.message || "Unable to log in.");
+      setError(getAuthErrorMessage(err, "Unable to log in. Check your email and password."));
     } finally {
       setBusy(false);
     }
@@ -76,6 +77,8 @@ export default function Login() {
         <p className="muted small-text">
           Need a tenant? <Link to="/register">Create an organization</Link>
         </p>
+        <p className="support-copy">Demo login: `admin@phishscale.demo` / `Admin@123`</p>
+        <p className="support-copy">API target: `{apiBase || "/api"}`</p>
         <p className="auth-footer-note">This frontend is intentionally simple and project-ready.</p>
       </form>
     </div>
