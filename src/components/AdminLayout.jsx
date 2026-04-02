@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { readJson, safeLocalStorage } from "../utils/storage.js";
 
 const navItems = [
   { to: "/dashboard", label: "Overview" },
@@ -9,16 +10,11 @@ const navItems = [
 ];
 
 export default function AdminLayout({ title, subtitle, children }) {
-  let user = null;
-  try {
-    user = JSON.parse(localStorage.getItem("phishscale_user") || "null");
-  } catch {
-    user = null;
-  }
+  const user = readJson(safeLocalStorage, "phishscale_user");
 
   const logout = () => {
-    localStorage.removeItem("phishscale_token");
-    localStorage.removeItem("phishscale_user");
+    safeLocalStorage.removeItem("phishscale_token");
+    safeLocalStorage.removeItem("phishscale_user");
     window.location.href = "/";
   };
 

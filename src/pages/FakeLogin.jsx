@@ -1,20 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../api";
+import { readJson, safeSessionStorage } from "../utils/storage.js";
 
 const sessionKey = (token) => `phishscale_flow_${token}`;
 
-const readFlow = (token) => {
-  try {
-    return JSON.parse(sessionStorage.getItem(sessionKey(token)) || "{}");
-  } catch {
-    return {};
-  }
-};
+const readFlow = (token) => readJson(safeSessionStorage, sessionKey(token), {});
 
 const writeFlow = (token, patch) => {
   const next = { ...readFlow(token), ...patch };
-  sessionStorage.setItem(sessionKey(token), JSON.stringify(next));
+  safeSessionStorage.setItem(sessionKey(token), JSON.stringify(next));
   return next;
 };
 

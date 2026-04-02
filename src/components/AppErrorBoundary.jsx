@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { safeLocalStorage } from "../utils/storage.js";
 
 export default class AppErrorBoundary extends Component {
   constructor(props) {
@@ -28,7 +29,8 @@ export default class AppErrorBoundary extends Component {
             <button
               className="primary-btn"
               onClick={() => {
-                localStorage.removeItem("phishscale_token");
+                safeLocalStorage.removeItem("phishscale_token");
+                safeLocalStorage.removeItem("phishscale_user");
                 window.location.href = "/";
               }}
             >

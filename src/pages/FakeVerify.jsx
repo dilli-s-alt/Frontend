@@ -1,19 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../api";
+import { readJson, safeSessionStorage } from "../utils/storage.js";
 
 const sessionKey = (token) => `phishscale_flow_${token}`;
 
-const readFlow = (token) => {
-  try {
-    return JSON.parse(sessionStorage.getItem(sessionKey(token)) || "{}");
-  } catch {
-    return {};
-  }
-};
+const readFlow = (token) => readJson(safeSessionStorage, sessionKey(token), {});
 
 const clearFlow = (token) => {
-  sessionStorage.removeItem(sessionKey(token));
+  safeSessionStorage.removeItem(sessionKey(token));
 };
 
 export default function FakeVerify() {

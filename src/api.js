@@ -1,8 +1,8 @@
 import axios from "axios";
+import { isLocalhostHost, safeLocalStorage } from "./utils/storage.js";
 
 const rawApiUrl = import.meta.env.VITE_API_URL?.trim();
-const isLocalhost =
-  window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+const isLocalhost = isLocalhostHost();
 
 const fallbackApiUrl = isLocalhost ? "http://localhost:5000/api" : "/api";
 const productionDirectApiUrl = "https://phishingscale-project.onrender.com/api";
@@ -23,7 +23,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("phishscale_token");
+  const token = safeLocalStorage.getItem("phishscale_token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -49,8 +49,8 @@ api.interceptors.response.use(
     }
 
     if (error.response?.status === 401) {
-      localStorage.removeItem("phishscale_token");
-      localStorage.removeItem("phishscale_user");
+      safeLocalStorage.removeItem("phishscale_token");
+      safeLocalStorage.removeItem("phishscale_user");
     }
 
     return Promise.reject(error);

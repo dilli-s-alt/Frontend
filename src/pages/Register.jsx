@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
+import { safeLocalStorage } from "../utils/storage.js";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -20,8 +21,8 @@ export default function Register() {
     setError("");
     try {
       const { data } = await api.post("/auth/register", form);
-      localStorage.setItem("phishscale_token", data.token);
-      localStorage.setItem("phishscale_user", JSON.stringify(data.user));
+      safeLocalStorage.setItem("phishscale_token", data.token);
+      safeLocalStorage.setItem("phishscale_user", JSON.stringify(data.user));
       navigate("/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Unable to create the workspace.");
